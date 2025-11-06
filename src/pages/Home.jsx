@@ -26,8 +26,12 @@ function Home() {
         <button 
           className="btn-primary"
           onClick={() => navigate('/participantes')}
+          aria-label="Ir al listado de participantes"
         >
-          Entrar
+          <span>Explorar Participantes</span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 10h10M10 5l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </button>
       </div>
     </div>
