@@ -6,6 +6,53 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.gafete-container::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(102, 126, 234, 0.08) 0%,
+    transparent 70%
+  );
+  animation: float 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.gafete-container::after {
+  content: "";
+  position: absolute;
+  bottom: -50%;
+  left: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(118, 75, 162, 0.08) 0%,
+    transparent 70%
+  );
+  animation: float 25s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(30px, -30px) rotate(5deg);
+  }
+  66% {
+    transform: translate(-20px, 20px) rotate(-5deg);
+  }
 }
 
 .loading-container {
@@ -34,7 +81,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .btn-back {
@@ -52,6 +101,8 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  position: relative;
+  z-index: 10;
 }
 
 .btn-back:hover {
@@ -63,24 +114,35 @@
 }
 
 .gafete-wrapper {
-  perspective: 1000px;
+  perspective: 1500px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .gafete {
-  width: 360px;
-  height: 520px;
+  width: 380px;
+  height: 540px;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  user-select: none;
+}
+
+.gafete:hover {
+  transform: translateY(-8px) scale(1.02);
 }
 
 .gafete.flipped {
   transform: rotateY(180deg);
+}
+
+.gafete.flipped:hover {
+  transform: rotateY(180deg) translateY(-8px) scale(1.02);
 }
 
 .gafete-front,
@@ -91,17 +153,12 @@
   backface-visibility: hidden;
   background: white;
   border-radius: 24px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid #f3f4f6;
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
-
-.gafete-back {
-  overflow-y: auto;
-}
-
 
 .gafete-back {
   transform: rotateY(180deg);
@@ -155,39 +212,61 @@
 
 .avatar-container {
   margin-bottom: 2rem;
+  position: relative;
+}
+
+.avatar-container::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.1)
+  );
+  border-radius: 50%;
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .gafete-avatar {
-  width: 130px;
-  height: 130px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   border: 6px solid white;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
   object-fit: cover;
+  position: relative;
+  z-index: 1;
 }
 
 .participante-nombre {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin: 0;
   font-weight: 800;
-  letter-spacing: -0.02em;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
 }
 
 .participante-apellidos {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   margin: 0.5rem 0 1.5rem;
   font-weight: 600;
   opacity: 0.95;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .participante-info {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
   padding: 1.25rem 2rem;
   border-radius: 16px;
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -198,8 +277,8 @@
 }
 
 .gafete-footer {
-  background: rgba(0, 0, 0, 0.15);
-  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1.25rem 1.5rem;
   backdrop-filter: blur(10px);
 }
 
@@ -207,11 +286,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   color: white;
-  font-size: 0.85rem;
-  font-weight: 500;
-  opacity: 0.9;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.flip-icon {
+  animation: rotate-hint 2s ease-in-out infinite;
+}
+
+@keyframes rotate-hint {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
 }
 
 /* REVERSO DEL GAFETE */
@@ -227,10 +319,17 @@
 }
 
 .back-header h3 {
-  margin: 0;
-  font-size: 1.5rem;
+  margin: 0 0 0.5rem;
+  font-size: 1.6rem;
   font-weight: 800;
   letter-spacing: -0.02em;
+}
+
+.back-subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  font-weight: 500;
 }
 
 .back-body {
@@ -238,14 +337,15 @@
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
+  justify-content: center;
 }
 
 .contact-item {
   display: flex;
   align-items: flex-start;
   gap: 1.25rem;
-  padding: 1.25rem;
+  padding: 1.5rem;
   background: #f9fafb;
   border-radius: 16px;
   border: 1px solid #f3f4f6;
@@ -259,8 +359,8 @@
 
 .icon-wrapper {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   background: white;
   border-radius: 12px;
   display: flex;
@@ -286,93 +386,99 @@
   font-size: 1rem;
   word-break: break-word;
   font-weight: 600;
+  line-height: 1.5;
 }
 
-.qr-section {
+.interaction-hint {
+  animation: fadeIn 1s ease-out 0.5s backwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hint-card {
+  background: white;
+  padding: 1.25rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 1rem;
-  margin-top: auto;
-  padding-top: 1.5rem;
-}
-
-.qr-wrapper {
-  position: relative;
-  padding: 12px;
-  background: white;
-  border: 3px solid #f3f4f6;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-}
-
-.qr-icon {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background: #667eea;
-  color: white;
-  padding: 8px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-}
-
-.qr-code {
-  width: 130px;
-  height: 130px;
-  border-radius: 8px;
-  display: block;
-}
-
-.qr-label {
-  margin: 0;
-  font-size: 0.85rem;
-  color: #6b7280;
-  font-weight: 600;
-  text-align: center;
-}
-
-.btn-flip {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  padding: 16px 32px;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
+  border: 2px solid #f3f4f6;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
 }
 
-.btn-flip:hover {
+.hint-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.15);
+  border-color: #e0e7ff;
+}
+
+.tap-icon {
+  color: #667eea;
+  flex-shrink: 0;
+  animation: pulse-icon 2s ease-in-out infinite;
+}
+
+@keyframes pulse-icon {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.hint-card p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {
   .gafete-container {
     padding: 2rem 1rem;
   }
-  
+
   .gafete {
     width: 340px;
-    height: 490px;
+    height: 500px;
   }
-  
+
   .gafete-avatar {
-    width: 110px;
-    height: 110px;
+    width: 120px;
+    height: 120px;
   }
-  
+
   .participante-nombre {
-    font-size: 1.75rem;
+    font-size: 1.9rem;
   }
-  
+
   .participante-apellidos {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+  }
+
+  .hint-card {
+    padding: 1rem 1.5rem;
+  }
+
+  .hint-card p {
+    font-size: 0.9rem;
+  }
+
+  .contact-item {
+    padding: 1.25rem;
   }
 }

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { apiService } from '../services/api';
-import './Gafete.css';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { apiService } from "../services/api";
+import "./Gafete.css";
 
 function Gafete() {
   const { id } = useParams();
@@ -21,16 +21,20 @@ function Gafete() {
       if (result.success) {
         setParticipante(result.data);
       } else {
-        alert('Participante no encontrado');
-        navigate('/participantes');
+        alert("Participante no encontrado");
+        navigate("/participantes");
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Error al cargar el participante');
-      navigate('/participantes');
+      console.error("Error:", error);
+      alert("Error al cargar el participante");
+      navigate("/participantes");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleFlip = () => {
+    setFlipped(!flipped);
   };
 
   if (loading) {
@@ -48,24 +52,51 @@ function Gafete() {
 
   return (
     <div className="gafete-container">
-      <button 
+      <button
         className="btn-back"
-        onClick={() => navigate('/participantes')}
+        onClick={() => navigate("/participantes")}
         aria-label="Volver al listado de participantes"
       >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 10H5M5 10l5 5M5 10l5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 10H5M5 10l5 5M5 10l5-5"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
         <span>Volver al listado</span>
       </button>
 
       <div className="gafete-wrapper">
-        <div className={`gafete ${flipped ? 'flipped' : ''}`}>
+        <div
+          className={`gafete ${flipped ? "flipped" : ""}`}
+          onClick={handleFlip}
+          role="button"
+          tabIndex={0}
+          onKeyPress={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              handleFlip();
+            }
+          }}
+          aria-label={
+            flipped
+              ? "Clic para ver frente del gafete"
+              : "Clic para ver reverso del gafete"
+          }
+        >
           <div className="gafete-front">
             <div className="gafete-header">
-              <img 
-                src="https://enes.unam.mx/uploads/1/1/8/1/118158124/published/utl-acambaro.png?1544046187" 
-                alt="UTL Logo" 
+              <img
+                src="https://enes.unam.mx/uploads/1/1/8/1/118158124/published/utl-acambaro.png?1544046187"
+                alt="UTL Logo"
                 className="gafete-logo"
               />
               <div className="gafete-title">
@@ -76,16 +107,14 @@ function Gafete() {
 
             <div className="gafete-body">
               <div className="avatar-container">
-                <img 
-                  src={participante.avatar} 
+                <img
+                  src={participante.avatar}
                   alt={`${participante.nombre} ${participante.apellidos}`}
                   className="gafete-avatar"
                 />
               </div>
 
-              <h1 className="participante-nombre">
-                {participante.nombre}
-              </h1>
+              <h1 className="participante-nombre">{participante.nombre}</h1>
               <h2 className="participante-apellidos">
                 {participante.apellidos}
               </h2>
@@ -97,25 +126,57 @@ function Gafete() {
 
             <div className="gafete-footer">
               <div className="flip-hint">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <svg
+                  className="flip-icon"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
-                <span>Toca el botón para ver información de contacto</span>
+                <span>Toca para ver más información</span>
               </div>
             </div>
           </div>
-          
+
           <div className="gafete-back">
             <div className="back-header">
               <h3>Información de Contacto</h3>
+              <p className="back-subtitle">Toca para regresar</p>
             </div>
 
             <div className="back-body">
               <div className="contact-item">
                 <div className="icon-wrapper">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="m22 6-10 7L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="m22 6-10 7L2 6"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 </div>
                 <div>
@@ -127,8 +188,20 @@ function Gafete() {
               {participante.twitter && (
                 <div className="contact-item">
                   <div className="icon-wrapper">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </div>
                   <div>
@@ -140,9 +213,32 @@ function Gafete() {
 
               <div className="contact-item">
                 <div className="icon-wrapper">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      x="2"
+                      y="7"
+                      width="20"
+                      height="14"
+                      rx="2"
+                      ry="2"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 </div>
                 <div>
@@ -150,40 +246,41 @@ function Gafete() {
                   <p>{participante.ocupacion}</p>
                 </div>
               </div>
-
-              <div className="qr-section">
-                <div className="qr-wrapper">
-                  <svg className="qr-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
-                    <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
-                    <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
-                    <rect x="14" y="14" width="3" height="3" fill="currentColor"/>
-                    <rect x="18" y="14" width="3" height="3" fill="currentColor"/>
-                    <rect x="14" y="18" width="3" height="3" fill="currentColor"/>
-                    <rect x="18" y="18" width="3" height="3" fill="currentColor"/>
-                  </svg>
-                  <img 
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${window.location.href}`}
-                    alt="QR Code"
-                    className="qr-code"
-                  />
-                </div>
-                <p className="qr-label">Escanea para ver perfil completo</p>
-              </div>
             </div>
           </div>
         </div>
 
-        <button 
-          className="btn-flip"
-          onClick={() => setFlipped(!flipped)}
-          aria-label={flipped ? 'Ver frente del gafete' : 'Ver reverso del gafete'}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-          <span>{flipped ? 'Ver Frente' : 'Ver Reverso'}</span>
-        </button>
+        <div className="interaction-hint">
+          <div className="hint-card">
+            <svg
+              className="tap-icon"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+                stroke="currentColor"
+                strokeWidth="2"
+              />
+            </svg>
+            <p>
+              Toca el gafete para ver{" "}
+              {flipped ? "el frente" : "más información"}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
