@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%);
+  background: hsl(var(--background));
   padding: 20px;
   position: relative;
   overflow: hidden;
@@ -16,11 +16,7 @@
   right: -50%;
   width: 100%;
   height: 100%;
-  background: radial-gradient(
-    circle,
-    rgba(102, 126, 234, 0.08) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, transparent 70%);
   animation: float 20s ease-in-out infinite;
 }
 
@@ -31,11 +27,7 @@
   left: -50%;
   width: 100%;
   height: 100%;
-  background: radial-gradient(
-    circle,
-    rgba(118, 75, 162, 0.08) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.02) 0%, transparent 70%);
   animation: float 25s ease-in-out infinite reverse;
 }
 
@@ -90,22 +82,24 @@
 .congress-logo {
   width: 140px;
   height: auto;
-  background: white;
+  background: hsl(var(--card));
   padding: 24px;
-  border-radius: 24px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-  transition: transform 0.3s ease;
+  border-radius: 16px;
+  border: 1px solid hsl(var(--border));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
 }
 
 .utl-logo:hover,
 .congress-logo:hover {
   transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .collaboration-symbol {
   font-size: 2.5rem;
   font-weight: 300;
-  color: #9ca3af;
+  color: hsl(var(--muted-foreground));
   user-select: none;
   animation: pulse 2s ease-in-out infinite;
 }
@@ -124,9 +118,9 @@
 
 .congress-title {
   font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: 500;
   margin: 2rem 0 0.5rem;
-  color: #6b7280;
+  color: hsl(var(--muted-foreground));
   letter-spacing: 0.1em;
   text-transform: uppercase;
   animation: fadeIn 1s ease-out 0.2s backwards;
@@ -145,10 +139,7 @@
   font-size: 3.5rem;
   font-weight: 800;
   margin: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: hsl(var(--foreground));
   line-height: 1.2;
   animation: fadeIn 1s ease-out 0.4s backwards;
 }
@@ -156,7 +147,7 @@
 .congress-info {
   margin: 2.5rem 0;
   font-size: 1.1rem;
-  color: #4b5563;
+  color: hsl(var(--muted-foreground));
   font-weight: 400;
   animation: fadeIn 1s ease-out 0.6s backwards;
 }
@@ -169,23 +160,19 @@
   font-size: 2rem;
   font-weight: 700;
   margin-top: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: hsl(var(--foreground));
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: 1px solid hsl(var(--primary));
   padding: 18px 40px;
   font-size: 1.1rem;
   font-weight: 600;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  transition: all 0.2s ease;
   margin-top: 2.5rem;
   position: relative;
   overflow: hidden;
@@ -205,7 +192,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.1),
     transparent
   );
   transition: left 0.5s;
@@ -216,8 +203,9 @@
 }
 
 .btn-primary:hover {
+  background: hsl(var(--primary) / 0.9);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn-primary:active {
